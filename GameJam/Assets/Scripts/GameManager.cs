@@ -26,13 +26,6 @@ public class GameManager : MonoBehaviour
         GameState = GameState.START_SCREEN;
     }
 
-
-    private void Update()
-    {
-
-    }
-
-
     // the one to be messed with by other scripts 
     public void ChangeState(GameState newState)
     {
@@ -49,15 +42,22 @@ public class GameManager : MonoBehaviour
             case GameState.IN_PUZZLE:
                 // go to the puzzle manager
                 print("In puzzle called");
+                UIManager.Instance.startScreen.SetActive(false);
+                UIManager.Instance.winScreen.SetActive(false);
+                UIManager.Instance.loseScreen.SetActive(false);
                 PuzzleManager.Instance.StartFirstPuzzle();
                 break;
 
             case GameState.WIN:
                 print("Win called");
+                UIManager.Instance.startScreen.SetActive(false);
+                UIManager.Instance.loseScreen.SetActive(false);
                 UIManager.Instance.winScreen.SetActive(true); 
                 break;
 
             case GameState.LOSE:
+                UIManager.Instance.startScreen.SetActive(false);
+                UIManager.Instance.winScreen.SetActive(false);
                 UIManager.Instance.loseScreen.SetActive(true);
                 break;
         }

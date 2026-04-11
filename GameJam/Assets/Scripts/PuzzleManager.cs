@@ -65,7 +65,6 @@ public class PuzzleManager : MonoBehaviour
         if (activePuzzleIndex >= puzzles.Count)
         {
             // there are no more puzzles 
-            GameManager.Instance.ChangeState(FsmGameState.WIN);
             return;
         }
         ChangePuzzleState(PuzzleState.IN_PROGRESS); 
@@ -82,12 +81,14 @@ public class PuzzleManager : MonoBehaviour
                 print("puzzle state in progress called");
                 Puzzle currentPuzzle = puzzles[activePuzzleIndex];
                 currentPuzzle.StartPuzzle();
-
                 break;
+
             case PuzzleState.COMPLETE:
                 // if all puzzles are complete we win
+                puzzles[activePuzzleIndex].EndPuzzle(); 
                 StartNextPuzzle();
                 break;
+
             case PuzzleState.FAIL:
                 puzzles[activePuzzleIndex].EndPuzzle();
                 GameManager.Instance.ChangeState(FsmGameState.LOSE);
@@ -100,12 +101,13 @@ public class PuzzleManager : MonoBehaviour
     {
         // add the completed puzzle to the hashset 
         completedPuzzles.Add(puzzleName);
-        ChangePuzzleState(PuzzleState.COMPLETE);
         CheckWinCondition();
+        ChangePuzzleState(PuzzleState.COMPLETE);
     }
 
     private void CheckWinCondition()
     {
+        print("Check win condition called");
         // if the length of the completed puzzles 
         // is equal to the total number of puzzles 
         if (completedPuzzles.Count >= puzzleNumber)

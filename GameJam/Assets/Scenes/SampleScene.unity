@@ -4099,9 +4099,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 058b0f2d43bc13444aa0f59d103e4c1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIManager
-  startScreen: {fileID: 336823730}
-  winScreen: {fileID: 1553737682}
-  loseScreen: {fileID: 1040603995}
+  startScreen: {fileID: 2095479798}
+  winScreen: {fileID: 765653679}
+  loseScreen: {fileID: 1167887766}
   startPlayButton: {fileID: 1452975848}
   startQuitButton: {fileID: 219325978}
   winPlayButton: {fileID: 1639478090}
