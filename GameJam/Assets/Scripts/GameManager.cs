@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public GameState GameState { get; private set; }
-    private HashSet<KeyValuePair<GameState, GameState>> allowedTransitions;
 
     private void Start()
     {
@@ -40,6 +39,7 @@ public class GameManager : MonoBehaviour
 
             case GameState.IN_PUZZLE:
                 // go to the puzzle manager
+                PuzzleManager.Instance.ChangePuzzleState(FsmPuzzleState.IN_PROGRESS);
                 break;
 
             case GameState.WIN:
