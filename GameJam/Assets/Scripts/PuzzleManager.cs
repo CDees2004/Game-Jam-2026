@@ -22,7 +22,7 @@ public class PuzzleManager : MonoBehaviour
     public List<Puzzle> puzzles;
 
     // total puzzle number
-    private int puzzleNumber = 1;
+    private int puzzleNumber;
     private int activePuzzleIndex = -1; // -1 indicating no active puzzle
 
     private void Awake()
@@ -61,10 +61,12 @@ public class PuzzleManager : MonoBehaviour
     private void StartNextPuzzle()
     {
         activePuzzleIndex++;
+        print($"Starting puzzle {activePuzzleIndex}"); 
 
         if (activePuzzleIndex >= puzzles.Count)
         {
             // there are no more puzzles 
+            CheckWinCondition();
             return;
         }
         ChangePuzzleState(PuzzleState.IN_PROGRESS); 
@@ -107,7 +109,8 @@ public class PuzzleManager : MonoBehaviour
 
     private void CheckWinCondition()
     {
-        print("Check win condition called");
+        print($"puzzleNumber is {puzzleNumber}");
+        print($"Completed puzzles count is {completedPuzzles.Count}");
         // if the length of the completed puzzles 
         // is equal to the total number of puzzles 
         if (completedPuzzles.Count >= puzzleNumber)
