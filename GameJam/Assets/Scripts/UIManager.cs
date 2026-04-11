@@ -5,6 +5,9 @@ using UnityEditor;
 
 public class UIManager : MonoBehaviour
 {
+    // singleton because manager script
+    public static UIManager Instance { get; private set; }
+
     // main UI elements 
     // set in inspector 
     public GameObject startScreen;
@@ -22,6 +25,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        Instance = this; 
         // wiring the buttons 
 
         // start screen buttons

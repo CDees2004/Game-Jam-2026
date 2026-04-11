@@ -9,13 +9,17 @@ public class Puzzle : MonoBehaviour
     // every puzzle should have a name, timer, and win condition
     private string puzzleName;
     private float puzzleTimer;
-    private bool isComplete;
 
-    public Puzzle(string puzzleName, float puzzleTimer, bool isComplete)
+    public Puzzle(string puzzleName, float puzzleTimer)
     {
         this.puzzleName = puzzleName;
         this.puzzleTimer = puzzleTimer;
-        this.isComplete = isComplete;
+    }
+
+    public virtual void SolvePuzzle()
+    {
+        // override this in actual puzzle scripts 
+        print("Calling virtual implementation of SolvePuzzle"); 
     }
 
     private void Start()

@@ -17,12 +17,20 @@ public class PuzzleManager : MonoBehaviour
     // hashset of completed puzzles 
     private static HashSet<string> completedPuzzles = new();
 
+    // list containing all of our puzzles
+    public List<Puzzle> puzzles;
+
     // total puzzle number
     private int puzzleNumber = 1;
+    private int activePuzzleIndex = -1; // -1 indicating no active puzzle
 
     private void Start()
     {
+        // set the puzzle game object to be active 
+        Instance = this;
 
+        if (puzzles == null) puzzles = new List<Puzzle>();
+        puzzleNumber = puzzles.Count;
     }
 
     private void Update()
@@ -37,13 +45,17 @@ public class PuzzleManager : MonoBehaviour
         switch (PuzzleState)
         {
             case PuzzleState.IN_PROGRESS:
-                PuzzleState = PuzzleState.COMPLETE;
+                // actual puzzle logic which is handled in 
+                // puzzle scripts
+
+
                 break;
             case PuzzleState.COMPLETE:
-                PuzzleState = PuzzleState.FAIL;
+                // if all puzzles are complete we win
+                GameManager.Instance.ChangeState(FsmGameState.WIN);
                 break;
             case PuzzleState.FAIL:
-                PuzzleState = PuzzleState.IN_PROGRESS;
+                GameManager.Instance.ChangeState(FsmGameState.LOSE);
                 break;
         }
     }
