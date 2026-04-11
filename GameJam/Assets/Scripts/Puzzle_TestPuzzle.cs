@@ -12,6 +12,7 @@ public class Puzzle_TestPuzzle : Puzzle
 
     private void Start()
     {
+        print("test puzzle start called");
         puzzleName = "Test Puzzle";
         puzzleTimer = 10.0f; 
 

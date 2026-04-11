@@ -2088,6 +2088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundManager
   mainVolume: 1
+  audioSrc: {fileID: 0}
 --- !u!82 &1114599680
 AudioSource:
   m_ObjectHideFlags: 0

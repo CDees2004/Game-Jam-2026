@@ -23,9 +23,14 @@ public class UIManager : MonoBehaviour
     public GameObject losePlayButton;
     public GameObject loseQuitButton;
 
+    private void Awake()
+    {
+        // set the puzzle game object to be active 
+        Instance = this;
+    }
+
     private void Start()
     {
-        Instance = this; 
         // wiring the buttons 
 
         // start screen buttons

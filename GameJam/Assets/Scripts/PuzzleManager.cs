@@ -4,6 +4,7 @@ using PuzzleState = FsmPuzzleState;
 
 public enum FsmPuzzleState
 {
+    NOT_STARTED,
     IN_PROGRESS,
     COMPLETE,
     FAIL,
@@ -24,19 +25,35 @@ public class PuzzleManager : MonoBehaviour
     private int puzzleNumber = 1;
     private int activePuzzleIndex = -1; // -1 indicating no active puzzle
 
-    private void Start()
+    private void Awake()
     {
         // set the puzzle game object to be active 
         Instance = this;
+        PuzzleState = PuzzleState.NOT_STARTED;
+    }
 
+    private void Start()
+    {
         // making sure all puzzles are inactive at the start of the game
-        foreach(Puzzle puzzle in puzzles)
+        foreach (Puzzle puzzle in puzzles)
         {
             puzzle.EndPuzzle();
         }
 
         if (puzzles == null) puzzles = new List<Puzzle>();
         puzzleNumber = puzzles.Count;
+    }
+
+    // public entry point 
+    public void StartFirstPuzzle()
+    {
+        print("Start first puzzle called");
+        activePuzzleIndex = -1;
+
+        foreach (var puzzle in puzzles)
+        {
+            puzzle.EndPuzzle(); // turning all off 
+        }
 
         StartNextPuzzle();
     }
@@ -51,8 +68,7 @@ public class PuzzleManager : MonoBehaviour
             GameManager.Instance.ChangeState(FsmGameState.WIN);
             return;
         }
-
-        PuzzleState = PuzzleState.IN_PROGRESS; // should start the puzzle 
+        ChangePuzzleState(PuzzleState.IN_PROGRESS); 
     }
 
     public void ChangePuzzleState(PuzzleState newState)
@@ -63,6 +79,7 @@ public class PuzzleManager : MonoBehaviour
         switch (PuzzleState)
         {
             case PuzzleState.IN_PROGRESS:
+                print("puzzle state in progress called");
                 Puzzle currentPuzzle = puzzles[activePuzzleIndex];
                 currentPuzzle.StartPuzzle();
 
@@ -83,6 +100,7 @@ public class PuzzleManager : MonoBehaviour
     {
         // add the completed puzzle to the hashset 
         completedPuzzles.Add(puzzleName);
+        ChangePuzzleState(PuzzleState.COMPLETE);
         CheckWinCondition();
     }
 

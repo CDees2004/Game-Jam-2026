@@ -15,9 +15,14 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public GameState GameState { get; private set; }
 
+    private void Awake()
+    {
+        // set the puzzle game object to be active 
+        Instance = this;
+    }
+
     private void Start()
     {
-        Instance = this; 
         GameState = GameState.START_SCREEN;
     }
 
@@ -33,7 +38,7 @@ public class GameManager : MonoBehaviour
     {
         if (GameState == newState) return; 
         GameState = newState; 
-        switch (GameState)
+        switch (newState)
         {
             case GameState.START_SCREEN:
                 // restartaing is handled with scene reload 
@@ -43,10 +48,12 @@ public class GameManager : MonoBehaviour
 
             case GameState.IN_PUZZLE:
                 // go to the puzzle manager
-                PuzzleManager.Instance.ChangePuzzleState(FsmPuzzleState.IN_PROGRESS);
+                print("In puzzle called");
+                PuzzleManager.Instance.StartFirstPuzzle();
                 break;
 
             case GameState.WIN:
+                print("Win called");
                 UIManager.Instance.winScreen.SetActive(true); 
                 break;
 
