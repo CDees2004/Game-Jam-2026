@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ef49b65d387e8534db4c8a8ea81f46ce
+guid: 0233f7c659545c149a080d8481783285
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Quit_Button
+  - name: Submit_Button
     originalName: 
     pivot: {x: 0.5, y: 0}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 64
       height: 16
-    spriteID: 8104f58b3f50db442bcd14ea520b2181
+    spriteID: 2634b66ee6e70494b8798ad8f1bc760e
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,17 +153,17 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 147116446
+      value0: 1494414077
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: Quit_Button
+    name: Submit_Button
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Quit_Button
+    - name: Submit_Button
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 0
         width: 64
         height: 16
-      spriteId: 8104f58b3f50db442bcd14ea520b2181
+      spriteId: 2634b66ee6e70494b8798ad8f1bc760e
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
