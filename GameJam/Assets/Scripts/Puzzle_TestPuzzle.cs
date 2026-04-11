@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,27 +7,17 @@ using UnityEngine.UI;
 public class Puzzle_TestPuzzle : Puzzle
 {
     // set in inspector
+    public GameObject puzzelPanel;
     public GameObject testWinButton;
-
-    // puzzle params 
-    private string puzzleName = "Test Puzzle"; 
-    private float puzzleTimer = 60.0f;
-
-    public Puzzle_TestPuzzle(string puzzleName, float puzzleTimer, bool isComplete) : base(puzzleName, puzzleTimer)
-    {
-
-    }
-
-    public override void SolvePuzzle()
-    {
-        print("Solved test puzzle");
-        PuzzleManager.Instance.CompletePuzzle(puzzleName); 
-    }
-   
 
     private void Start()
     {
-        if(testWinButton != null)
+        puzzleName = "Test Puzzle";
+        puzzleTimer = 10.0f; 
+
+        puzzelPanel.SetActive(true);
+
+        if (testWinButton != null)
         {
             Button testWin = testWinButton.GetComponent<Button>();
             testWin.onClick.AddListener(SolvePuzzle);
@@ -35,6 +26,19 @@ public class Puzzle_TestPuzzle : Puzzle
 
     private void Update()
     {
-        
+        // timer constantly counting down 
+        puzzleTimer -= Time.deltaTime;
+        if (puzzleTimer <= 0)
+        {
+            FailPuzzle();
+        }
     }
+
+
+    public override void SolvePuzzle()
+    {
+        print("Solved test puzzle");
+        PuzzleManager.Instance.CompletePuzzle(puzzleName);
+    }
+
 }

@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     // the one to be messed with by other scripts 
     public void ChangeState(GameState newState)
     {
+        if (GameState == newState) return; 
+        GameState = newState; 
         switch (GameState)
         {
             case GameState.START_SCREEN:

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 
 // template script for individual puzzles to be 
@@ -7,28 +8,28 @@ using UnityEngine;
 public class Puzzle : MonoBehaviour
 {
     // every puzzle should have a name, timer, and win condition
-    private string puzzleName;
-    private float puzzleTimer;
+    protected string puzzleName;
+    protected float puzzleTimer;
 
-    public Puzzle(string puzzleName, float puzzleTimer)
+    public virtual void StartPuzzle()
     {
-        this.puzzleName = puzzleName;
-        this.puzzleTimer = puzzleTimer;
+        gameObject.SetActive(true);
+    }
+
+    public virtual void EndPuzzle()
+    {
+        gameObject.SetActive(false);
+    }
+
+    protected void FailPuzzle()
+    {
+        PuzzleManager.Instance.ChangePuzzleState(FsmPuzzleState.FAIL);
     }
 
     public virtual void SolvePuzzle()
     {
         // override this in actual puzzle scripts 
-        print("Calling virtual implementation of SolvePuzzle"); 
-    }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
+        print("Calling virtual implementation of SolvePuzzle");
+        PuzzleManager.Instance.CompletePuzzle(puzzleName);
     }
 }

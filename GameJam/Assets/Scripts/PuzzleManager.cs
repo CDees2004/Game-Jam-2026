@@ -29,32 +29,50 @@ public class PuzzleManager : MonoBehaviour
         // set the puzzle game object to be active 
         Instance = this;
 
+        // making sure all puzzles are inactive at the start of the game
+        foreach(Puzzle puzzle in puzzles)
+        {
+            puzzle.EndPuzzle();
+        }
+
         if (puzzles == null) puzzles = new List<Puzzle>();
         puzzleNumber = puzzles.Count;
+
+        StartNextPuzzle();
     }
 
-    private void Update()
+    private void StartNextPuzzle()
     {
+        activePuzzleIndex++;
 
+        if (activePuzzleIndex >= puzzles.Count)
+        {
+            // there are no more puzzles 
+            GameManager.Instance.ChangeState(FsmGameState.WIN);
+            return;
+        }
+
+        PuzzleState = PuzzleState.IN_PROGRESS; // should start the puzzle 
     }
 
     public void ChangePuzzleState(PuzzleState newState)
     {
         if (PuzzleState == newState) return;
+        PuzzleState = newState;
 
         switch (PuzzleState)
         {
             case PuzzleState.IN_PROGRESS:
-                // actual puzzle logic which is handled in 
-                // puzzle scripts
-
+                Puzzle currentPuzzle = puzzles[activePuzzleIndex];
+                currentPuzzle.StartPuzzle();
 
                 break;
             case PuzzleState.COMPLETE:
                 // if all puzzles are complete we win
-                GameManager.Instance.ChangeState(FsmGameState.WIN);
+                StartNextPuzzle();
                 break;
             case PuzzleState.FAIL:
+                puzzles[activePuzzleIndex].EndPuzzle();
                 GameManager.Instance.ChangeState(FsmGameState.LOSE);
                 break;
         }
