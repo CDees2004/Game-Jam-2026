@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 
 using System.Collections.Generic;
+using System.Data;
 
 
 public class PasswordPuzzle : MonoBehaviour
@@ -45,29 +46,38 @@ public class PasswordPuzzle : MonoBehaviour
     public void CheckPassword()
     { 
         string password = passwordInput.text;
+        
+        bool allPassed = true;
+
         for (int i=0; i < visibleRuleCount; i++)
         {
-            bool passed = CheckRule(i,password);
-            spawnRules[i].SetPassed(passed);
+            bool passed = CheckRule(i,password); // check the current password
+            spawnRules[i].SetPassed(passed); // change the color of current rule
 
-            // get wrong input
             if (!passed)
-            {   
-                resultText.text = resultTextList[Random.Range(0,resultTextList.Length)];
-                return;
-            }
-
-            // right input, but still have more rule
-            if(visibleRuleCount < rules.Length)
             {
-                resultText.text = resultTextList[Random.Range(0,resultTextList.Length)];
-                AddNextRule();
-            }
-            else
-            {
-                resultText.text = "The password is accepted";
+                allPassed = false;
             }
         }
+
+        // get wrong input
+        if (!allPassed)
+        {   
+            resultText.text = resultTextList[Random.Range(0,resultTextList.Length)];
+            return;
+        }
+
+        // right input, but still have more rule
+        if(visibleRuleCount < rules.Length)
+        {
+            resultText.text = resultTextList[Random.Range(0,resultTextList.Length)];
+            AddNextRule();
+        }
+        else
+        {
+            resultText.text = "The password is accepted";
+        }
+
     }
 
     public void AddNextRule()
@@ -80,6 +90,14 @@ public class PasswordPuzzle : MonoBehaviour
 
         spawnRules.Add(newRule);
         visibleRuleCount++;
+    }
+
+    public void AddCurrentRule()
+    {
+        RuleBox currentRule = Instantiate(ruleBoxPrefab,ruleContainer);
+        currentRule.SetUp(rules[visibleRuleCount-1]);
+        currentRule.transform.SetAsFirstSibling();
+        spawnRules.Add(currentRule);
     }
 
     public bool CheckRule(int index, string password)
