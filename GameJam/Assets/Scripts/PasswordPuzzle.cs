@@ -32,7 +32,7 @@ public class PasswordPuzzle : Puzzle
     {   
         //set puzzle name and time
         puzzleName = "Password Puzzle";
-        puzzleTimer = 15.0f; 
+        puzzleTimer = 30.0f; 
 
         resultTextList = new string[]
                 {

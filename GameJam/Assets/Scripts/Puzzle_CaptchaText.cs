@@ -1,6 +1,8 @@
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using UnityEngine.InputSystem;
 
 // example puzzle is an instance of a puzzle 
 // solved by clicking UI button 
@@ -9,20 +11,27 @@ public class Puzzle_CaptchaText : Puzzle
     // set in inspector
     public GameObject puzzelPanel;
     public GameObject testWinButton;
-    public Puzzle_SearchBar searchBar;
+    public TMP_InputField input;
 
-    // values
-    private string solution = "test123";
-    
+    // fields
+    private string solution;
+    // private float puzzlenumber;
 
     private void Start()
     {
-        puzzleNumber = 1f;
+        // puzzlenumber = 1f;
         print("captcha puzzle start called");
-        puzzleTimer = 10.0f;
+        puzzleTimer = 20.0f;
+        puzzleName = "captcha-i_am_stupid";
+        solution = "i am stupid";
 
         puzzelPanel.SetActive(true);
 
+        if (testWinButton != null)
+        {
+            Button testWin = testWinButton.GetComponent<Button>();
+            testWin.onClick.AddListener(CheckSolution);
+        }
     }
 
     private void Update()
@@ -32,18 +41,22 @@ public class Puzzle_CaptchaText : Puzzle
         if (puzzleTimer <= 0)
         {
             FailPuzzle();
-        } 
-    }
-
-    public override void SolvePuzzle()
-    {
-        string userInput = searchBar.GetUserInput();
-        if (userInput == solution) {
-            print($"Solved {puzzleName}");
-            PuzzleManager.Instance.CompletePuzzle(puzzleName);
-        } else {
-            Debug.Log("Try again.");
         }
     }
 
+    private void CheckSolution()
+    {
+        if (input.text == solution)
+        {
+            SolvePuzzle();
+        }
+    }
+
+
+    public override void SolvePuzzle()
+    {
+        print($"Solved {puzzleName}");
+        PuzzleManager.Instance.CompletePuzzle(puzzleName);
+    }
 }
+
