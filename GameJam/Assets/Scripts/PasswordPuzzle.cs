@@ -2,8 +2,9 @@ using UnityEngine;
 using TMPro;
 
 using System.Collections.Generic;
-using System.Data;
 using UnityEngine.UI;
+using System;
+using Random = UnityEngine.Random;
 
 
 public class PasswordPuzzle : Puzzle
@@ -21,29 +22,25 @@ public class PasswordPuzzle : Puzzle
     private string[] rules =
     {
         "Your password must be at least 6 characters long.",
-        "Your password must contain at least 1 uppercase letter.",
-        "Your password must contain at least 1 number.",
-        "Your password must contain at least 1 special character (!, @, #, $, %, &, *).",
-        // "The sum of all digits in your password must equal 25.",
-        // "Your password must contain the name of a color.",
-        // "Your password must contain a month of the year.",
-        // "Your password must contain a Roman numeral (I, V, X, L, C).",
-        // "Your password must not contain the same character twice in a row.",
-        // "Your password must end with a symbol chosen by the game."
+        "Your password must contain at least 4 uppercase letter.",
+        "Your password must contain at least 5 number.",
+        "Your password must contain at least 2 special character (!, @, #, $, %, &, *).",
+        "The sum of all digits in your password must equal 25.",
     };
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {   
         //set puzzle name and time
         puzzleName = "Password Puzzle";
-        puzzleTimer = 10.0f; 
+        puzzleTimer = 15.0f; 
 
         resultTextList = new string[]
                 {
                     "Are you a robot ???",
                     "Are you a human ??",
                     "Robot is almost detected !!",
-                    "Let a human help you !!"
+                    "Let a human help you !!",
+                    "Robot ?? ",
                 };
         AddNextRule();
         passwordInput.onValueChanged.AddListener(delegate{CheckPassword();});
@@ -66,7 +63,7 @@ public class PasswordPuzzle : Puzzle
             FailPuzzle();
         }
     }
-    
+
     public override void SolvePuzzle()
     {
         print("Solved Password Puzzle");
@@ -102,12 +99,19 @@ public class PasswordPuzzle : Puzzle
         {
             resultText.text = resultTextList[Random.Range(0,resultTextList.Length)];
             AddNextRule();
+            int newRuleIndex = visibleRuleCount - 1;
+            bool newRulePassed = CheckRule(newRuleIndex,password);
+            spawnRules[newRuleIndex].SetPassed(newRulePassed); // set the color
+
+            if (newRulePassed)
+            {
+                CheckPassword();
+            }
         }
         else
         {
             resultText.text = "The password is accepted";
         }
-
     }
 
     public void AddNextRule()
@@ -138,32 +142,63 @@ public class PasswordPuzzle : Puzzle
             case 1: return HasUpperCase(password);
             case 2: return HasNumber(password);
             case 3: return HasSpecialCharacter(password);
+            //case 4: return HasSumEqual_25(password);
             default: return false;
         }
     }
     bool HasUpperCase(string s)
     {
+        int countUpper = 0;
         foreach (char c in s)
         {
-            if (char.IsUpper(c)) return true;
+            if (char.IsUpper(c))
+            {
+                countUpper++;
+            } 
+            if (countUpper >= 4) return true;
         }return false;
     }
 
     public bool HasNumber(string s)
     {
+        int countNum = 0;
         foreach (char c in s)
         {
-            if (char.IsNumber(c)) return true;
-        }return false;
+            if (char.IsNumber(c)) {
+                countNum++;
+            }
+        }
+        if (countNum >= 5) return true;
+        return false;
     }
 
     public bool HasSpecialCharacter(string s)
     {
+        int countSpecial = 0;
         string special = "!@#$%&*";
         foreach (char c in s)
         {
-            if (special.Contains(char.ToString(c))) return true;
+            if (special.Contains(char.ToString(c)))
+            {
+                countSpecial++;
+            }
+            if (countSpecial >= 2) return true;
         }return false;
     }
+
+    public bool HasSumEqual_25(string s)
+    {
+        int countSum = 0;
+        foreach (char c in s)
+        {
+            if (char.IsNumber(c)) {
+                int currentNum = c - '0';
+                countSum += currentNum;
+            }
+        }
+        if (countSum == 25) return true;
+        return false;
+    }
+
 }
 

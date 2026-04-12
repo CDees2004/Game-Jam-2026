@@ -19,5 +19,4 @@ public class RuleBox : MonoBehaviour
         //if it true:passed green, flase red
         background.color = passed ? passedColor : lockColor;
     }
-
 }
