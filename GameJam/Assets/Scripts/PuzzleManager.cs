@@ -16,7 +16,7 @@ public class PuzzleManager : MonoBehaviour
     public static PuzzleManager Instance { get; private set; }
     public PuzzleState PuzzleState { get; private set; }
     // hashset of completed puzzles 
-    private static HashSet<string> completedPuzzles = null;
+    public static HashSet<string> completedPuzzles = null;
 
     // list containing all of our puzzles
     public List<Puzzle> puzzles;
