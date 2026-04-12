@@ -12,7 +12,8 @@ public class Puzzle_CaptchaText : Puzzle
     public Puzzle_SearchBar searchBar;
 
     // values
-    private string solution;
+    private string solution = "test123";
+    
 
     private void Start()
     {
@@ -22,38 +23,27 @@ public class Puzzle_CaptchaText : Puzzle
 
         puzzelPanel.SetActive(true);
 
-        if (testWinButton != null)
-        {
-            Button testWin = testWinButton.GetComponent<Button>();
-            testWin.onClick.AddListener(SolvePuzzle);
-        }
     }
 
     private void Update()
     {
-        CheckSolution();
         // timer constantly counting down 
         puzzleTimer -= Time.deltaTime;
         if (puzzleTimer <= 0)
         {
             FailPuzzle();
-        }
+        } 
     }
-
-    public void CheckSolution()
-    {
-        string userInput = searchBar.GetUserInput();
-        if (userInput == solution)
-        {
-            SolvePuzzle();
-        }
-    }
-
 
     public override void SolvePuzzle()
     {
-        print($"Solved {puzzleName}");
-        PuzzleManager.Instance.CompletePuzzle(puzzleName);
+        string userInput = searchBar.GetUserInput();
+        if (userInput == solution) {
+            print($"Solved {puzzleName}");
+            PuzzleManager.Instance.CompletePuzzle(puzzleName);
+        } else {
+            Debug.Log("Try again.");
+        }
     }
 
 }
