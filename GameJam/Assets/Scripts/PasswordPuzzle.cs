@@ -39,12 +39,13 @@ public class PasswordPuzzle : MonoBehaviour
                     "Let a human help you !!"
                 };
         AddNextRule();
+        passwordInput.onValueChanged.AddListener(delegate{CheckPassword();});
     }
 
     public void CheckPassword()
     { 
         string password = passwordInput.text;
-        for (int i=0; i <= visibleRuleCount; i++)
+        for (int i=0; i < visibleRuleCount; i++)
         {
             bool passed = CheckRule(i,password);
             spawnRules[i].SetPassed(passed);
@@ -71,7 +72,7 @@ public class PasswordPuzzle : MonoBehaviour
 
     public void AddNextRule()
     {
-        if (visibleRuleCount > rules.Length) return;
+        if (visibleRuleCount >= rules.Length) return;
 
         RuleBox newRule = Instantiate(ruleBoxPrefab,ruleContainer);
         newRule.SetUp(rules[visibleRuleCount]);
@@ -85,7 +86,7 @@ public class PasswordPuzzle : MonoBehaviour
     {
         switch (index)
         {
-            case 0: return password.Length > 6;
+            case 0: return password.Length >= 6;
             case 1: return HasUpperCase(password);
             case 2: return HasNumber(password);
             case 3: return HasSpecialCharacter(password);
