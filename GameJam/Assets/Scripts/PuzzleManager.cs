@@ -16,13 +16,13 @@ public class PuzzleManager : MonoBehaviour
     public static PuzzleManager Instance { get; private set; }
     public PuzzleState PuzzleState { get; private set; }
     // hashset of completed puzzles 
-    private static HashSet<string> completedPuzzles = new();
+    private static HashSet<string> completedPuzzles = null;
 
     // list containing all of our puzzles
     public List<Puzzle> puzzles;
 
     // total puzzle number
-    private int puzzleNumber = 1;
+    private int puzzleNumber;
     private int activePuzzleIndex = -1; // -1 indicating no active puzzle
 
     private void Awake()
@@ -30,6 +30,7 @@ public class PuzzleManager : MonoBehaviour
         // set the puzzle game object to be active 
         Instance = this;
         PuzzleState = PuzzleState.NOT_STARTED;
+        if (completedPuzzles == null) completedPuzzles = new(); 
     }
 
     private void Start()
@@ -61,10 +62,12 @@ public class PuzzleManager : MonoBehaviour
     private void StartNextPuzzle()
     {
         activePuzzleIndex++;
+        print($"Starting puzzle {activePuzzleIndex}"); 
 
         if (activePuzzleIndex >= puzzles.Count)
         {
             // there are no more puzzles 
+            CheckWinCondition();
             return;
         }
         ChangePuzzleState(PuzzleState.IN_PROGRESS); 
@@ -92,6 +95,7 @@ public class PuzzleManager : MonoBehaviour
             case PuzzleState.FAIL:
                 puzzles[activePuzzleIndex].EndPuzzle();
                 GameManager.Instance.ChangeState(FsmGameState.LOSE);
+                completedPuzzles.Clear();
                 break;
         }
     }
@@ -107,12 +111,14 @@ public class PuzzleManager : MonoBehaviour
 
     private void CheckWinCondition()
     {
-        print("Check win condition called");
+        print($"puzzleNumber is {puzzleNumber}");
+        print($"Completed puzzles count is {completedPuzzles.Count}");
         // if the length of the completed puzzles 
         // is equal to the total number of puzzles 
         if (completedPuzzles.Count >= puzzleNumber)
         {
             GameManager.Instance.ChangeState(FsmGameState.WIN);
+            completedPuzzles.Clear();
         }
     }
 }

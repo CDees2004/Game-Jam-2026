@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 // example puzzle is an instance of a puzzle 
 // solved by clicking UI button 
-public class Puzzle_TestPuzzle : Puzzle
+public class Puzzle_SearchBar : Puzzle
 {
     // set in inspector
     public GameObject puzzelPanel;
@@ -12,7 +12,6 @@ public class Puzzle_TestPuzzle : Puzzle
 
     private void Start()
     {
-        print("test puzzle start called");
         puzzleName = "Test Puzzle";
         puzzleTimer = 10.0f; 
 

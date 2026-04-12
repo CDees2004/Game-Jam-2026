@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
                 // restartaing is handled with scene reload 
                 // so this state should not need behavior
                 UIManager.Instance.startScreen.SetActive(true);
+                UIManager.Instance.loseScreen.SetActive(false);
+                UIManager.Instance.winScreen.SetActive(false);
                 break;
 
             case GameState.IN_PUZZLE:
