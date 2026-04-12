@@ -3,11 +3,13 @@ using TMPro;
 
 using System.Collections.Generic;
 using System.Data;
+using UnityEngine.UI;
 
 
-public class PasswordPuzzle : MonoBehaviour
+public class PasswordPuzzle : Puzzle
 {
     [Header("UI")]
+    public GameObject DoneButton;
     public TMP_InputField passwordInput;
     public TextMeshProUGUI resultText;
     public Transform ruleContainer;
@@ -31,7 +33,11 @@ public class PasswordPuzzle : MonoBehaviour
     };
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {
+    {   
+        //set puzzle name and time
+        puzzleName = "Password Puzzle";
+        puzzleTimer = 10.0f; 
+
         resultTextList = new string[]
                 {
                     "Are you a robot ???",
@@ -41,6 +47,30 @@ public class PasswordPuzzle : MonoBehaviour
                 };
         AddNextRule();
         passwordInput.onValueChanged.AddListener(delegate{CheckPassword();});
+
+        // check for Done button, if click, change to SolvePuzzle
+        if (DoneButton != null)
+        {
+            Button WinPuzzle = DoneButton.GetComponent<Button>();
+            WinPuzzle.onClick.AddListener(SolvePuzzle);
+        }
+
+    }
+
+    private void Update()
+    {
+        // timer constantly counting down 
+        puzzleTimer -= Time.deltaTime;
+        if (puzzleTimer <= 0)
+        {
+            FailPuzzle();
+        }
+    }
+    
+    public override void SolvePuzzle()
+    {
+        print("Solved Password Puzzle");
+        PuzzleManager.Instance.CompletePuzzle(puzzleName);
     }
 
     public void CheckPassword()
