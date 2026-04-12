@@ -142,7 +142,7 @@ public class PasswordPuzzle : Puzzle
             case 1: return HasUpperCase(password);
             case 2: return HasNumber(password);
             case 3: return HasSpecialCharacter(password);
-            //case 4: return HasSumEqual_25(password);
+            case 4: return HasSumEqual_25(password);
             default: return false;
         }
     }
