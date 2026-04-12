@@ -9,14 +9,14 @@ public class Puzzle_CaptchaText : Puzzle
     // set in inspector
     public GameObject puzzelPanel;
     public GameObject testWinButton;
+    public Puzzle_SearchBar searchBar;
 
     // values
-    private string puzzleName;
     private string solution;
 
     private void Start()
     {
-        puzzlenumber = 1f;
+        puzzleNumber = 1f;
         print("captcha puzzle start called");
         puzzleTimer = 10.0f;
 
@@ -31,6 +31,7 @@ public class Puzzle_CaptchaText : Puzzle
 
     private void Update()
     {
+        CheckSolution();
         // timer constantly counting down 
         puzzleTimer -= Time.deltaTime;
         if (puzzleTimer <= 0)
@@ -39,9 +40,10 @@ public class Puzzle_CaptchaText : Puzzle
         }
     }
 
-    private void CheckSolution()
+    public void CheckSolution()
     {
-        if (input == solution)
+        string userInput = searchBar.GetUserInput();
+        if (userInput == solution)
         {
             SolvePuzzle();
         }

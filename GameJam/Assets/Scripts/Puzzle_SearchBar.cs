@@ -1,6 +1,7 @@
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 // example puzzle is an instance of a puzzle 
 // solved by clicking UI button 
@@ -9,6 +10,7 @@ public class Puzzle_SearchBar : Puzzle
     // set in inspector
     public GameObject puzzelPanel;
     public GameObject testWinButton;
+    public TMP_InputField textField;
 
     private void Start()
     {
@@ -32,6 +34,11 @@ public class Puzzle_SearchBar : Puzzle
         {
             FailPuzzle();
         }
+    }
+
+    public string GetUserInput()
+    {
+        return textField.text;
     }
 
 

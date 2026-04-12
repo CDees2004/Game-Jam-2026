@@ -10,6 +10,7 @@ public class Puzzle : MonoBehaviour
     // every puzzle should have a name, timer, and win condition
     protected string puzzleName;
     protected float puzzleTimer;
+    protected float puzzleNumber;
 
     public virtual void StartPuzzle()
     {
