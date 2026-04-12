@@ -16,7 +16,7 @@ public class PuzzleManager : MonoBehaviour
     public static PuzzleManager Instance { get; private set; }
     public PuzzleState PuzzleState { get; private set; }
     // hashset of completed puzzles 
-    private static HashSet<string> completedPuzzles = new();
+    private static HashSet<string> completedPuzzles = null;
 
     // list containing all of our puzzles
     public List<Puzzle> puzzles;
@@ -30,6 +30,7 @@ public class PuzzleManager : MonoBehaviour
         // set the puzzle game object to be active 
         Instance = this;
         PuzzleState = PuzzleState.NOT_STARTED;
+        if (completedPuzzles == null) completedPuzzles = new(); 
     }
 
     private void Start()
@@ -94,6 +95,7 @@ public class PuzzleManager : MonoBehaviour
             case PuzzleState.FAIL:
                 puzzles[activePuzzleIndex].EndPuzzle();
                 GameManager.Instance.ChangeState(FsmGameState.LOSE);
+                completedPuzzles.Clear();
                 break;
         }
     }
@@ -116,6 +118,7 @@ public class PuzzleManager : MonoBehaviour
         if (completedPuzzles.Count >= puzzleNumber)
         {
             GameManager.Instance.ChangeState(FsmGameState.WIN);
+            completedPuzzles.Clear();
         }
     }
 }
