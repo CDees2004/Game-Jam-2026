@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 // example puzzle is an instance of a puzzle 
 // solved by clicking UI button 
-public class Puzzle_TestPuzzle : Puzzle
+public class Puzzle_SearchBar : Puzzle
 {
     // set in inspector
     public GameObject puzzelPanel;
