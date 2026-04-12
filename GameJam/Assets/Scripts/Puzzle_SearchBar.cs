@@ -15,7 +15,7 @@ public class Puzzle_SearchBar : Puzzle
     private void Start()
     {
         puzzleName = "Test Puzzle";
-        puzzleTimer = 10.0f; 
+        puzzleTimer = 100.0f; 
 
         puzzelPanel.SetActive(true);
 
