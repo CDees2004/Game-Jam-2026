@@ -5,9 +5,13 @@ using UnityEngine.Audio;
 
 public enum SoundType
 {
-    TUMBLE,
-    WALKING,
-    PICKUP, // trailing commas are allowed in C# 
+    CLICK_ON,
+    NOTIFICATION,
+    START_UP,
+    UPGRADE,
+    SHUTDOWN,
+    WRONG,
+    CORRECT // trailing commas are allowed in C# 
 }
 
 // you can have several helper classes but they 
@@ -88,9 +92,13 @@ public class SoundManager : MonoBehaviour
         // you don't have to put anything after new in C#
         sounds = new()
         {
-            {SoundType.PICKUP, new SoundCollection("") },
-            {SoundType.TUMBLE, new SoundCollection("") }, // have multiple here 
-            {SoundType.WALKING, new SoundCollection("") },
+            {SoundType.CLICK_ON, new SoundCollection("Click") },
+            {SoundType.NOTIFICATION, new SoundCollection("Notification") }, // have multiple here 
+            {SoundType.UPGRADE, new SoundCollection("Upgrade") },
+            {SoundType.SHUTDOWN, new SoundCollection("ShutDown") },
+            {SoundType.WRONG, new SoundCollection("Wrong") },
+            {SoundType.CORRECT, new SoundCollection("Correct") },
+
         };
     }
 
@@ -112,3 +120,5 @@ public class SoundManager : MonoBehaviour
         }
     }
 }
+
+// for use : SoundManager.Play(SoundType.CLICK_ON);

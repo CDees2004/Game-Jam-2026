@@ -26,6 +26,8 @@ public class PasswordPuzzle : Puzzle
         "Your password must contain at least 5 number.",
         "Your password must contain at least 2 special character (!, @, #, $, %, &, *).",
         "The sum of all digits in your password must equal 25.",
+        //"Your password cannot contain two identical characters in a row",
+
     };
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -91,7 +93,9 @@ public class PasswordPuzzle : Puzzle
         if (!allPassed)
         {   
             resultText.text = resultTextList[Random.Range(0,resultTextList.Length)];
+            SoundManager.Play(SoundType.WRONG);
             return;
+            
         }
 
         // right input, but still have more rule
@@ -111,6 +115,7 @@ public class PasswordPuzzle : Puzzle
         else
         {
             resultText.text = "The password is accepted";
+            SoundManager.Play(SoundType.CORRECT);
         }
     }
 
@@ -143,6 +148,7 @@ public class PasswordPuzzle : Puzzle
             case 2: return HasNumber(password);
             case 3: return HasSpecialCharacter(password);
             case 4: return HasSumEqual_25(password);
+            //case 5: return HasTwoIdentical(password);
             default: return false;
         }
     }
@@ -200,5 +206,12 @@ public class PasswordPuzzle : Puzzle
         return false;
     }
 
+    // public bool HasTwoIdentical(string s)
+    // {
+    //     for (int i=0; i < s.Length-1; i++)
+    //     {
+    //         if (s[i] == s[i+1]) return true;
+    //     }return false;
+    // }
 }
 
